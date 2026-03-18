@@ -20,7 +20,7 @@ cashflow = "cashflow.interfaces.cli:app"
 
 # ✅ Configuración CRÍTICA para src layout en Hatch
 [tool.hatch.build]
-sources = ["src"]  # <-- Esto le dice a Hatch que 'src' es la raíz de los imports
+sources = ["src"]
 
 [tool.hatch.envs.default]
 dependencies = [
@@ -31,18 +31,27 @@ dependencies = [
 
 [tool.hatch.envs.default.scripts]
 test = "pytest {args:tests}"
-test-cov = "pytest --cov=cashflow {args:tests}"  # Cobertura sobre el paquete, no src/cashflow
+test-cov = "pytest --cov=cashflow {args:tests}"
 lint = "ruff check src/cashflow tests"
 fmt = "ruff format src/cashflow tests"
 
 [tool.pytest.ini_options]
-pythonpath = ["src"]  # Para que pytest encuentre los imports
+pythonpath = ["src"]
 testpaths = ["tests"]
+markers = [
+    "gui: tests that require GTK 4 + libadwaita",
+    "integration: integration tests",
+    "unit: unit tests",
+]
 
 [tool.ruff]
 line-length = 88
 target-version = "py310"
 src = ["src"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["cashflow"]
+section-order = ["future", "standard-library", "third-party", "first-party", "local-folder"]
 
 [tool.coverage.run]
 source = ["src/cashflow"]
@@ -55,3 +64,12 @@ exclude_lines = [
     "raise NotImplementedError",
     "if __name__ == .__main__.:",
 ]
+
+[project.optional-dependencies]
+gui = [
+    "pygobject>=3.44.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/vmgabriel/wallet-control"
+Documentation = "https://github.com/vmgabriel/wallet-control#readme"

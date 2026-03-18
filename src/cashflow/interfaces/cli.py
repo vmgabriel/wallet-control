@@ -45,5 +45,25 @@ def summary():
         )
     console.print(table)
 
+
+@app.command()
+def gui():
+    """Abrir interfaz gráfica con GTK + libadwaita"""
+    try:
+        from cashflow.interfaces.gui.app import run_gui
+        # Salir del programa CLI y ejecutar la GUI
+        raise SystemExit(run_gui())
+    except ImportError as e:
+        console.print("[red]❌ GUI no disponible[/red]")
+        console.print(f"\n[bold]Error:[/bold] {e}")
+        console.print("\n[yellow]Solución:[/yellow]")
+        console.print("1. Instala las dependencias opcionales:")
+        console.print("   hatch run pip install '.[gui]'")
+        console.print("\n2. Asegúrate de tener GTK 4 y libadwaita en tu sistema:")
+        console.print("   - Fedora: sudo dnf install gtk4 libadwaita")
+        console.print("   - Ubuntu: sudo apt install libgtk-4-dev libadwaita-1-dev")
+        console.print("   - Arch: sudo pacman -S gtk4 libadwaita")
+
+
 if __name__ == "__main__":
     app()

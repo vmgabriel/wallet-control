@@ -368,3 +368,59 @@ SOFTWARE.
 - [ ] 🗑️ Comando `delete` para eliminar gastos por ID
 - [ ] 🔄 Comando `edit` para modificar gastos existentes
 - [ ] 📱 API REST con FastAPI (opcional, misma arquitectura)
+
+## 🖥️ Interfaz Gráfica (GTK + Adwaita)
+
+CashFlow incluye una interfaz gráfica nativa para GNOME/GTK.
+
+### Requisitos del Sistema
+
+- **GTK 4** y **libadwaita** instalados a nivel de sistema
+- **PyGObject** bindings para Python
+
+#### Instalación en Linux (Fedora/RHEL)
+```bash
+sudo dnf install gtk4 libadwaita gobject-introspection gtk4-devel libadwaita-devel
+```
+
+#### Instalación en Linux (Debian/Ubuntu)
+```bash
+sudo apt install libgtk-4-dev libadwaita-1-dev gir1.2-gtk-4.0 gir1.2-adw-1
+```
+
+#### Instalación en Linux (Arch)
+```bash
+sudo pacman -S gtk4 libadwaita gobject-introspection
+```
+
+### Instalar Dependencias Python
+
+```bash
+make install-gui
+# O manualmente:
+hatch run pip install '.[gui]'
+```
+
+### Ejecutar la GUI
+
+```bash
+# Con Make
+make gui
+
+# O directamente
+hatch run cashflow gui
+```
+
+### Captura de Pantalla
+
+![CashFlow GUI](docs/gui-screenshot.png)
+
+*Interfaz principal mostrando balance y lista de gastos recientes.*
+
+### Funcionalidades GUI
+
+- ✅ Visualización del balance total en tiempo real
+- ✅ Lista de últimos movimientos con fecha, categoría y monto
+- ✅ Diálogo modal para agregar nuevos gastos con validación
+- ✅ Diseño adaptativo con libadwaita (oscuro/claro automático)
+- ✅ Integración total con la lógica de negocio existente
